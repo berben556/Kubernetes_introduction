@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  namespace: kubernetes-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+        - name: front
+          image: berben556/kubernetes_demo_front:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: VUE_APP_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: VUE_APP_API_URL
+            - name: BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: BASE_URL

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap
+  namespace: kubernetes-demo
+data:
+  POSTGRES_DB: db
+  POSTGRES_USER: usr
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  DB_NAME: db
+  DB_USER: usr
+  VUE_APP_API_URL: /api
+  BASE_URL: /
