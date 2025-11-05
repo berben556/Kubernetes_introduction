@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-pv
+spec:
+  capacity:
+    storage: 1Gi # taille du volume de stockage
+  accessModes:
+    - ReadWriteMany # mode d'accès autorisés pour le volume
+  persistentVolumeReclaimPolicy: Retain # politique de récupération de la donnée
+  hostPath:
+    path: /data/site-test-data # path dans lequel les données seront persistées dans le cluster

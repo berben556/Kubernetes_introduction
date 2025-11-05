@@ -15,5 +15,12 @@ spec:
       containers:
       - name: test-kube-deployment
         image: 127.0.0.1:5000/kubernetes_intro-app
+        volumeMounts:
+          - name: site-test-volume
+            mountPath: /etc/site_volume # Path ou le volume persistent sera monté (accessible) dans le pod
         ports:
         - containerPort: 3000
+      volumes:
+        - name: site-test-volume
+          persistentVolumeClaim: 
+            claimName: test-pvc
