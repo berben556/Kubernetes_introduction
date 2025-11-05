@@ -1,0 +1,19 @@
+apiVersion: apps/v1 # Version de l'api kubernetes
+kind: Deployment
+metadata:
+  name: test-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: site-test
+  template:
+    metadata:
+      labels:
+        app: site-test
+    spec:
+      containers:
+      - name: test-kube-deployment
+        image: 127.0.0.1:5000/kubernetes_intro-app
+        ports:
+        - containerPort: 3000
