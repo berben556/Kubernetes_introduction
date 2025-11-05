@@ -19,7 +19,7 @@ spec:
           name: mysql
           volumeMounts:
             - name: site-test-volume
-              mountPath: /etc/site_volume # Path ou le volume persistent sera monté (accessible) dans le pod
+              mountPath: /var/lib/mysql # Path ou le volume persistent sera monté (accessible) dans le pod
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
