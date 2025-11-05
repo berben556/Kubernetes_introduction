@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-service  # Le nom unique du service dans votre cluster
+  labels:
+    app: site-test
+spec:
+  selector:
+    app: site-test  # identifier les pods qui appartiennent au service
+  ports:
+    - protocol: TCP # TCP ou UDP
+      port: 80 # Port exposé par le service
+      targetPort: 3000 # Port sur lequel le pod écoute
+  type: ClusterIP # Type de service (ClusterIP, NodePort, LoadBalancer)
