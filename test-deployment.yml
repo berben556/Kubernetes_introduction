@@ -15,12 +15,26 @@ spec:
       containers:
       - name: test-kube-deployment
         image: 127.0.0.1:5000/kubernetes_intro-app
-        volumeMounts:
-          - name: site-test-volume
-            mountPath: /etc/site_volume # Path ou le volume persistent sera monté (accessible) dans le pod
         ports:
-        - containerPort: 3000
-      volumes:
-        - name: site-test-volume
-          persistentVolumeClaim: 
-            claimName: test-pvc
+          - containerPort: 3000
+        env:
+          - name: MYSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: test-configmap
+                key: MYSQL_HOST
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef: # untilise une config map
+                name: test-configmap
+                key: MYSQL_USER
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:  # utilise un secret 
+                name: test-secret
+                key: MYSQL_PASSWORD
+          - name: MYSQL_DB
+            valueFrom:
+              configMapKeyRef:
+                name: test-configmap
+                key: MYSQL_DB

@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: mysql
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: mysql
@@ -16,9 +17,24 @@ spec:
       containers:
         - image: mysql:8.4.0
           name: mysql
+          volumeMounts:
+            - name: site-test-volume
+              mountPath: /etc/site_volume # Path ou le volume persistent sera monté (accessible) dans le pod
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: my-password
+              valueFrom:
+                secretKeyRef:  # utilise un secret 
+                  name: test-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: test-configmap
+                  key: MYSQL_DB
           ports:
             - containerPort: 3306
               name: mysql
+      volumes:
+        - name: site-test-volume
+          persistentVolumeClaim: 
+            claimName: test-pvc
