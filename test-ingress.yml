@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1 # API Kubernetes responsable du réseau : Services + Ingress
+kind: Ingress                    # Indique que ce manifest crée une ressource de type Ingress
+metadata:
+  name: test-ingress             # Nom du composant Ingress
+spec:
+  ingressClassName: nginx        # Ingress Controller utilisé (nginx par défaut)
+  rules:
+    - host: site-test.example    # Domaine/public host sur lequel l’app sera accessible
+      http:
+        paths:
+        - path: /                # Toutes les requêtes sur "/" ou sous-chemins
+          pathType: Prefix       # Mode de correspondance du chemin
+          backend:
+            service:
+              name: test-service # Le service Kubernetes vers lequel le trafic est envoyé
+              port:
+                number: 80       # Port d'exposition interne du service
